@@ -1,38 +1,270 @@
-.App {
+.experiment-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* provides spacing between each box */
+}
+
+.experiment-details-container {
+  position: relative;
+  border: 2px solid #0c446a; /* Add a border around the container */
+  border-radius: 10px; /* Add some border radius for a rounded look */
+  padding: 10px; /* Add some padding to create spacing between the box and the content */
+  width: 400px; /* Adjust the width as needed */
+  height: 180px; /* Adjust the height as needed */
+  background-color: rgba(129, 201, 249, 0.2); /* RGBA notation */
+}
+
+.experiment-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: white;
+  width: 200px;
+  font-weight: bold;
+  font-size: 5px; /* Adjust the font size as needed */
+  text-align: left;
+}
+
+/* This will be the parent container for both the sidebar and main content */
+.app-container {
+  display: flex;
+  overflow-y: auto; /* enable vertical scrolling */
+}
+
+.sidebar {
+  color: aliceblue;
+  width: 350px;
+  height: 100%; /* Setting height to 100% of its parent container */
+  /* Any other styles you want for the sidebar, such as padding, etc. */
+}
+
+.app-container {
+  display: flex;
+  background: #060f15;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%; /* Make sure the container takes up the full height */
+}
+
+/* ... (rest of your CSS) ... */
+.main-content {
+  margin-left: 50px;
+  flex-grow: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100vw; /* Set width to 100% of the viewport width */
+  height: 100vh; /* Set height to 100% of the viewport height */
+}
+
+/* ... (rest of your CSS) ... */
+
+html,
+body,
+#root,
+.app-container {
+  height: 100%;
+}
+
+.experiment-title {
+  color: white;
+  margin-left: 30px;
+}
+
+button.add-button {
+  border: 2px solid #2c3d51;
+  color: #70acf0;
+  background-color: transparent;
+  border-radius: 8px;
+  width: 250px;
+  box-sizing: border-box;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: 'Inter UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  height: 4rem;
+  margin-left: 12px;
+  padding: 0 1.6rem;
   text-align: center;
+  text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+  transition: all 0.5s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button.add-button:hover {
+  box-shadow: rgba(80, 63, 205, 0.8) 0 1px 30px;
+  transition-duration: 0.2s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media (min-width: 768px) {
+  .button-36 {
+    padding: 0 2.6rem;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Hover effect for buttons */
+button.add-button:hover,
+button.delete-button:hover {
+  opacity: 0.9; /* Slightly reduce opacity on hover */
+}
+
+.input-box {
+  width: 100%; /* Take up the full width of the container */
+  padding: 8px; /* Add some padding for spacing */
+  border: none; /* Remove the default border */
+  border-radius: 4px; /* Add a slight border radius */
+  box-shadow: 0 0 3px rgba(117, 245, 6, 0.1); /* Add a subtle box shadow */
+  font-size: 16px; /* Increase font size for better readability */
+}
+
+.experiment-details {
+  font-size: 13px;
   display: flex;
   flex-direction: column;
+}
+
+.experiment-detail-box {
+  margin: 8px 20px; /* Equal margin from top and bottom, and left margin */
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.action {
+  background-color: #3498db;
+}
+
+.frequency {
+  background-color: #e74c3c;
+}
+
+.inputType {
+  background-color: #2ecc71;
+}
+
+.evaluationMetric {
+  background-color: #f39c12;
+}
+
+.key {
+  border-radius: 5px; /* Rounded corners */
+  width: 110px; /* Set a fixed width for the key box */
+  padding: 4px 8px;
+  background-color: #e7eefd; /* Updated background color */
+  color: #1151f2;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Show ellipsis for long text */
+}
+
+.value {
+  height: 15px;
+  border-radius: 5px; /* Rounded corners */
+  width: 170px; /* Set a fixed width for the value box */
+  padding: 4px 8px;
+  margin-left: 10px;
+  background-color: white;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.complete-button {
+  background-color: transparent;
+  border: 2px solid #2c3d51;
+  color: #70acf0;
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.complete-button:hover {
+  background-color: #77dafe;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.complete-button.completed {
+  background-color: #77dafe;
+  color: #ffffff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#sidebar-title {
+  margin-left: 15px;
+  text-align: left;
+  font-size: 30px;
+  /* Other styles */
+}
+
+.days-of-week {
+  display: flex;
+  font-size: 100px;
+  margin-bottom: 10px;
+}
+
+.days-of-week .day-box {
+  text-align: center;
+}
+
+.ellipsis-button {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.number-input {
+  width: 50px;
+  background-color: transparent;
+  border: 2px solid #2c3d51;
+  color: #ffffff;
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: none;
+}
+
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input.saved {
+  background-color: #77dafe;
+}
+
+.experiment-details-container.disabled {
+  background: #060f15;
 }
