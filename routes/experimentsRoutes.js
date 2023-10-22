@@ -21,10 +21,31 @@ router.put("/:id", async (req, res) => {
   res.json({ message: "Update experiment" });
 });
 
-router.delete('/:id', async (req, res) => {
-    // Here, you would add logic to delete an experiment using req.params.id
-    res.json({ message: 'Delete experiment' });
-  });
+router.delete("/:id", async (req, res) => {
+  // Here, you would add logic to delete an experiment using req.params.id
+  res.json({ message: "Delete experiment" });
+});
+
+router.post("/:id/data", async (req, res) => {
+  const experimentId = req.params.id;
+  const dataPoint = req.body;
+
+  try {
+    const experiment = await Experiment.findById(experimentId);
+    if (!experiment) {
+      res.status(404).json({ message: "Experiment not found." });
+      return;
+    }
+
+    experiment.historicalData.push(dataPoint);
+    const updatedExperiment = await experiment.save();
+    res.status(200).json(updatedExperiment);
+  } catch (err) {
+    console.error("Error updating experiment:", err);
+    res
+      .status(500)
+      .json({ message: "Error updating experiment in the database." });
+  }
+});
 
 module.exports = router;
-

@@ -22,7 +22,9 @@ function App() {
   ];
 
   function toggleDropdown(experimentId) {
-    setShowDropdown(prevId => (prevId === experimentId ? null : experimentId));
+    setShowDropdown((prevId) =>
+      prevId === experimentId ? null : experimentId
+    );
   }
 
   function handleEdit(experiment) {
@@ -31,8 +33,8 @@ function App() {
   }
 
   function handleDelete(experimentId) {
-    setExperiments(prevExperiments =>
-      prevExperiments.filter(experiment => experiment.id !== experimentId)
+    setExperiments((prevExperiments) =>
+      prevExperiments.filter((experiment) => experiment.id !== experimentId)
     );
   }
 
@@ -50,8 +52,8 @@ function App() {
 
   const handleNumberInputChange = (e, experimentId) => {
     const inputValue = e.target.value;
-    setExperiments(prevExperiments =>
-      prevExperiments.map(experiment =>
+    setExperiments((prevExperiments) =>
+      prevExperiments.map((experiment) =>
         experiment.id === experimentId
           ? {
               ...experiment,
@@ -65,8 +67,8 @@ function App() {
 
   const handleKeyDown = (e, experimentId) => {
     if (e.key === 'Enter') {
-      setExperiments(prevExperiments => {
-        return prevExperiments.map(experiment => {
+      setExperiments((prevExperiments) => {
+        return prevExperiments.map((experiment) => {
           if (experiment.id === experimentId) {
             const today = new Date().toISOString().split('T')[0];
 
@@ -78,7 +80,7 @@ function App() {
 
               // Find the index of the existing data point for today, if it exists
               const todayIndex = historicalData.findIndex(
-                dataPoint => dataPoint.date === today
+                (dataPoint) => dataPoint.date === today
               );
 
               const newHistoricalDataPoint = {
@@ -132,20 +134,37 @@ function App() {
           : newExperiment.numberInputValue,
       historicalData, // adding the historicalData array to your experiment object
     };
+    fetch('/api/experiments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(experimentWithId),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Experiment saved to backend:', data);
 
-    setExperiments(prevExperiments => [
-      ...prevExperiments.filter(experiment => experiment.id !== timestamp),
-      experimentWithId,
-    ]);
-    setEditExperiment(null);
-    closeModal();
-    setShowDropdown(null);
-    console.log('Saved experiment:', experimentWithId);
+        // Update the local state after successfully saving to the backend
+        setExperiments((prevExperiments) => [
+          ...prevExperiments.filter(
+            (experiment) => experiment.id !== timestamp
+          ),
+          experimentWithId,
+        ]);
+        setEditExperiment(null);
+        closeModal();
+        setShowDropdown(null);
+        console.log('Saved experiment:', experimentWithId);
+      })
+      .catch((error) => {
+        console.error('Error saving experiment to backend:', error);
+      });
   }
 
   function handleCompleteButtonClick(experimentId) {
-    setExperiments(prevExperiments =>
-      prevExperiments.map(experiment =>
+    setExperiments((prevExperiments) =>
+      prevExperiments.map((experiment) =>
         experiment.id === experimentId
           ? { ...experiment, completed: !experiment.completed }
           : experiment
@@ -153,7 +172,7 @@ function App() {
     );
   }
 
-  const isInputEnabled = experiment => {
+  const isInputEnabled = (experiment) => {
     const today = new Date()
       .toLocaleString('en-US', { weekday: 'long' })
       .toLowerCase();
@@ -190,7 +209,7 @@ function App() {
       <div className="main-content">
         <h2 className="experiment-title">Your Experiments</h2>
         <div className="experiment-container">
-          {experiments.map(experiment => (
+          {experiments.map((experiment) => (
             <div className="experiment-row" key={experiment.id}>
               <div
                 className={`experiment-details-container ${
@@ -224,7 +243,7 @@ function App() {
                     <span className="value">
                       {Array.isArray(experiment.frequency) ? (
                         <div className="days-of-week">
-                          {daysOfWeek.map(day => (
+                          {daysOfWeek.map((day) => (
                             <div
                               key={day}
                               className={`day-box ${
@@ -282,8 +301,8 @@ function App() {
                   className={`number-input ${
                     experiment.isSaved ? 'saved' : ''
                   }`}
-                  onChange={e => handleNumberInputChange(e, experiment.id)}
-                  onKeyDown={e => handleKeyDown(e, experiment.id)}
+                  onChange={(e) => handleNumberInputChange(e, experiment.id)}
+                  onKeyDown={(e) => handleKeyDown(e, experiment.id)}
                   disabled={!isInputEnabled(experiment)} // Conditionally setting the disabled attribute
                 />
               )}
