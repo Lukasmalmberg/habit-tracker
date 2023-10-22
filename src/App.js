@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import ExperimentModal from './ExperimentModal'; // Import the ExperimentModal component
 
+console.log(process.env.REACT_APP_BACKEND_URL);
+
 function App() {
   // State for the list of experiments
   const [experiments, setExperiments] = useState([]);
@@ -134,7 +136,7 @@ function App() {
           : newExperiment.numberInputValue,
       historicalData, // adding the historicalData array to your experiment object
     };
-    fetch('/api/experiments', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/experiments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

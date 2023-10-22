@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Experiment = require("../Models/Experiment_models");
 
 router.get("/", async (req, res) => {
   // Here, you would add logic to retrieve all experiments from the database
@@ -12,8 +13,17 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  // Here, you would add logic to create a new experiment using req.body
-  res.json({ message: "Create new experiment" });
+  const experimentData = req.body;
+  try {
+    const newExperiment = new Experiment(experimentData);
+    const savedExperiment = await newExperiment.save();
+    res.status(201).json(savedExperiment);
+  } catch (err) {
+    console.error("Error saving experiment:", err);
+    res
+      .status(500)
+      .json({ message: "Error saving experiment to the database." });
+  }
 });
 
 router.put("/:id", async (req, res) => {
